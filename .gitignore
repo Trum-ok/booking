@@ -1,0 +1,33 @@
+# MacOS
+.DS_Store
+
+# Virtual environments
+venv/
+.venv/
+
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Python tooling
+.ruff_cache/
+.poetry/
+.mypy_cache/
+.pytype/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local overrides
+*.local.*
+local/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
