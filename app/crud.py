@@ -37,7 +37,7 @@ async def list_bookings(
     status: BookingStatus | None,
     limit: int,
     cursor: tuple[datetime, uuid.UUID] | None,
-) -> tuple[list[Booking], bool]:
+) -> tuple[list[Booking], tuple[datetime, uuid.UUID] | None]:
     """Keyset-пагинация по (created_at, id) DESC."""
     stmt = select(Booking)
     if status is not None:
@@ -48,8 +48,9 @@ async def list_bookings(
     stmt = stmt.order_by(Booking.created_at.desc(), Booking.id.desc()).limit(limit + 1)
     rows = list(await session.scalars(stmt))
 
-    has_more = len(rows) > limit
-    return rows[:limit], has_more
+    items = rows[:limit]
+    next_key = (items[-1].created_at, items[-1].id) if len(rows) > limit else None
+    return items, next_key
 
 
 async def cancel_booking(session: AsyncSession, booking_id: uuid.UUID) -> None:

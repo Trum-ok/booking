@@ -63,18 +63,13 @@ async def list_bookings(
                 detail="Invalid cursor",
             ) from None
 
-    items, has_more = await crud.list_bookings(
+    items, next_key = await crud.list_bookings(
         session, status=status_filter, limit=limit, cursor=decoded
-    )
-    next_cursor = (
-        encode_cursor(items[-1].created_at, items[-1].id)
-        if has_more and items
-        else None
     )
     return BookingList(
         items=[BookingRead.model_validate(i) for i in items],
         limit=limit,
-        next_cursor=next_cursor,
+        next_cursor=encode_cursor(*next_key) if next_key else None,
     )
 
 
