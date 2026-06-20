@@ -33,6 +33,5 @@ class Booking(Base):
     )
 
     __table_args__ = (
-        Index("ix_bookings_status_created_at_id", "status", "created_at", "id"),
-        Index("ix_bookings_created_at_id", "created_at", "id"),
+        Index("ix_bookings_created_at_id_status", "created_at", "id", "status"),
     )
