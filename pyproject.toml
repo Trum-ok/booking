@@ -1,0 +1,40 @@
+[project]
+name = "booking"
+version = "0.1.0"
+description = "Booking service"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.137.2",
+    "pydantic-settings>=2.14.1",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "asyncpg>=0.30.0",
+    "alembic>=1.18.4",
+    "taskiq>=0.11.7",
+    "taskiq-redis>=1.0.2",
+    "redis>=5.2.0",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.10",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=0.23.0",
+    "ty>=0.0.29",
+    "httpx>=0.28.1",
+    "testcontainers[postgres]>=4.8.0",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
