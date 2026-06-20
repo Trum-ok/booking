@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from app.exceptions import BookingNotCancellable, BookingNotFound
+from app.utils.exceptions import BookingNotCancellable, BookingNotFound
 
 
 async def _not_found(request: Request, exc: Exception) -> JSONResponse:

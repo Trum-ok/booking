@@ -7,9 +7,9 @@ from app import crud
 from app.core.db import get_session
 from app.core.ratelimit import rate_limit
 from app.models import BookingStatus
-from app.pagination import InvalidCursor, decode_cursor, encode_cursor
 from app.schemas import BookingCreate, BookingList, BookingRead
 from app.tasks.confirm import confirm_booking
+from app.utils.pagination import InvalidCursor, decode_cursor, encode_cursor
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 

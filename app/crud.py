@@ -4,9 +4,9 @@ from datetime import datetime
 from sqlalchemy import select, tuple_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.exceptions import BookingNotCancellable, BookingNotFound
 from app.models import Booking, BookingStatus
 from app.schemas import BookingCreate
+from app.utils.exceptions import BookingNotCancellable, BookingNotFound
 
 
 async def create_booking(session: AsyncSession, data: BookingCreate) -> Booking:
