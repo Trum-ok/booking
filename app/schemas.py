@@ -1,7 +1,8 @@
 import uuid
 from datetime import UTC, datetime
+from typing import Self
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.models import BookingStatus
 
@@ -11,14 +12,13 @@ class BookingCreate(BaseModel):
     datetime: datetime
     service_type: str = Field(min_length=1, max_length=100)
 
-    @field_validator("datetime")
-    @classmethod
-    def _require_aware_future(cls, value: datetime) -> datetime:
-        if value.tzinfo is None:
+    @model_validator(mode="after")
+    def _require_aware_future(self) -> Self:
+        if self.datetime.tzinfo is None:
             raise ValueError("datetime must include a timezone offset")
-        if value <= datetime.now(UTC):
+        if self.datetime <= datetime.now(UTC):
             raise ValueError("datetime must be in the future")
-        return value
+        return self
 
 
 class BookingRead(BaseModel):
